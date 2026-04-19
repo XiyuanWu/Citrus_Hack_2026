@@ -11,7 +11,7 @@ function CommunityCard({ image, title, description, href = "#" }) {
           <img
             src={image}
             alt={title}
-            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+            className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.03]"
           />
         </div>
         <div className="space-y-2 px-4 py-4 md:px-5">
