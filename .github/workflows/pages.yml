@@ -1,10 +1,10 @@
-# Build Vite app and deploy to GitHub Pages (Settings → Pages → GitHub Actions).
-# Requires: Settings → Pages → Source = "GitHub Actions".
-name: Deploy to GitHub Pages
+# Publishes the Vite `dist/` folder to GitHub Pages (not Jekyll / not README-only).
+# Settings → Pages → Build and deployment → Source: GitHub Actions
+name: Deploy Vite app to Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -25,12 +25,14 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
         env:
-          # Optional: add in repo Settings → Secrets → Actions
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
@@ -41,5 +43,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4

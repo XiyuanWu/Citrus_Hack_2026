@@ -10,5 +10,6 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   // Load `.env` from the project root (same directory as this config).
   envDir: ".",
-  base: "/",
+  // Must match repo name for project pages: https://<user>.github.io/<repo>/
+  base: "/Resource_Map_UCR/",
 });

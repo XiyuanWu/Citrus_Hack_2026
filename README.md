@@ -49,8 +49,10 @@ Set `VITE_GOOGLE_MAPS_API_KEY` in a `.env` file at the project root (this file i
 
 1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions** (not “Deploy from a branch” unless you only publish `dist` on `main`).
 2. Push `main`; the workflow in `.github/workflows/pages.yml` runs `npm ci`, `npm run build`, and uploads `dist/`.
-3. **`vite.config.js` `base`:** use `"/"` for a site at `https://<user>.github.io` (typical `username.github.io` repo). Use `"/YourRepoName/"` only for project pages at `https://<user>.github.io/YourRepoName/`.
+3. **`vite.config.js` `base`:** must match the site path. This repo uses project pages at `https://xiyuanwu.github.io/Resource_Map_UCR/`, so `base` is **`/Resource_Map_UCR/`**. For a `username.github.io` user site at the domain root, use **`"/"`** instead.
 4. Optional: add repository secret **`VITE_GOOGLE_MAPS_API_KEY`** so the map works in production builds.
+
+**If the live site only shows the README:** GitHub is not publishing your Vite `dist/` build (often Jekyll or an old “static” workflow). Open **Actions** → run **`Deploy Vite app to Pages`** (or push to `main`) and confirm the job is **green**. Delete any extra workflow under `.github/workflows/` that builds **Jekyll** or “Static HTML” from the repo root if you did not intend to use it. Only one workflow should upload **`actions/upload-pages-artifact`** from `npm run build`.
 
 ### Option B — `gh-pages` branch (`npm run deploy`)
 

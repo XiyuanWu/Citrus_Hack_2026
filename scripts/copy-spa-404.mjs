@@ -13,4 +13,7 @@ if (!fs.existsSync(index)) {
   process.exit(1);
 }
 fs.copyFileSync(index, notFound);
-console.log("copy-spa-404: wrote dist/404.html (GitHub Pages client routing).");
+fs.writeFileSync(path.join(dist, ".nojekyll"), "");
+console.log(
+  "copy-spa-404: wrote dist/404.html and dist/.nojekyll (GitHub Pages SPA).",
+);
