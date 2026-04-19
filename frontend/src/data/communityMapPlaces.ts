@@ -1,5 +1,9 @@
 import { asianMapPlaces } from "./communityPlaces/asianMapPlaces";
 import { hispanicOrLatinoMapPlaces } from "./communityPlaces/latinoMapPlaces";
+import {
+  getDirectionsUrl,
+  ummahPlaces,
+} from "./communityPlaces/ummahPlaces";
 
 export type PlaceCategory =
   | "community_clubs"
@@ -71,9 +75,32 @@ function fakePlaces(seed: string): MapPlace[] {
   });
 }
 
+/** Ummah spreadsheet rows → same shape as Latino / Asian map cards (no header images). */
+function ummahRowToMapPlace(
+  p: (typeof ummahPlaces)[number],
+): MapPlace {
+  return {
+    id: p.id,
+    name: p.name,
+    category: p.categoryId,
+    blurb: p.description,
+    mapX: 50,
+    mapY: 50,
+    lat: p.lat,
+    lng: p.lng,
+    address: p.address,
+    contact: p.website ?? "",
+    resource: p.website ?? RESOURCE_PLACEHOLDER,
+    images: false,
+    googleMapsUrl: p.googleMapLink?.trim() || getDirectionsUrl(p),
+  };
+}
+
+const ummahMuslimMapPlaces: MapPlace[] = ummahPlaces.map(ummahRowToMapPlace);
+
 export const communityMapPlacesBySlug: Record<string, MapPlace[]> = {
   "hispanic-or-latino": hispanicOrLatinoMapPlaces,
-  "ummah-muslim": fakePlaces("ummah-muslim"),
+  "ummah-muslim": ummahMuslimMapPlaces,
   asian: asianMapPlaces,
   "black-or-african-american": fakePlaces("black-or-african"),
   "american-indian": fakePlaces("american-indian"),
