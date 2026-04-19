@@ -1,4 +1,7 @@
 import placeholderImage from "../assets/landing/ucr background.jpg";
+import latinoSomosHeroImage from "../assets/landing/Background_Latino_Page.jpg";
+
+export type HeroVariant = "split" | "somos";
 
 export type CommunityPageData = {
   slug: string;
@@ -6,6 +9,8 @@ export type CommunityPageData = {
   subtitle: string;
   description: string;
   heroImage: string;
+  /** Default `split` (cream + photo). `somos` = full-bleed SOMOS UCR hero (Latino). */
+  heroVariant?: HeroVariant;
   mapPlaceholder: string;
   resourcePlaceholder: string;
   contactPlaceholder: string;
@@ -29,6 +34,8 @@ export const communityPageBySlug: Record<string, CommunityPageData> = {
     description:
       "Resources, spaces, and organizations that support students with Spanish-speaking or Latin American heritage.",
     ...defaultPlaceholders,
+    heroVariant: "somos",
+    heroImage: latinoSomosHeroImage,
   },
   "american-indian-or-alaskan-native": {
     slug: "american-indian-or-alaskan-native",

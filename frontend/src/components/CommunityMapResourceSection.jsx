@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { placeCategoryLabels } from "../data/communityMapPlaces";
 import GoogleMapsMapPanel from "./GoogleMapsMapPanel";
 
@@ -21,6 +21,27 @@ function CommunityMapResourceSection({
       return true;
     });
   }, [places, category]);
+
+  const placesKey = useMemo(
+    () =>
+      JSON.stringify(
+        filtered.map((p) => ({
+          id: p.id,
+          lat: p.lat,
+          lng: p.lng,
+          mapX: p.mapX,
+          mapY: p.mapY,
+        })),
+      ),
+    [filtered],
+  );
+
+  const handlePlaceSelect = useCallback((placeId) => {
+    document.getElementById(`place-card-${placeId}`)?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+  }, []);
 
   return (
     <section
@@ -83,44 +104,11 @@ function CommunityMapResourceSection({
               </div>
             </div>
 
-            <GoogleMapsMapPanel>
-              {filtered.length === 0 ? (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#d8e4f4]/90 p-6 backdrop-blur-[1px]">
-                  <p className="max-w-sm rounded-xl border border-[#c8d6ec] bg-white px-4 py-3 text-center font-sans text-sm text-[#314a74] shadow-sm">
-                    No locations match your filters. Add more rows in the data
-                    file for this community.
-                  </p>
-                </div>
-              ) : (
-                <div className="absolute inset-0 z-20">
-                  {filtered.map((p) => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      title={p.name}
-                      className="pointer-events-auto absolute flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#f2b617] text-[#0f2f69] shadow-md ring-2 ring-[#0f2f69]/25 transition hover:scale-110 hover:bg-[#ffc82e] focus:outline-none focus:ring-4 focus:ring-[#0f2f69]/30"
-                      style={{ left: `${p.mapX}%`, top: `${p.mapY}%` }}
-                      onClick={() => {
-                        document
-                          .getElementById(`place-card-${p.id}`)
-                          ?.scrollIntoView({
-                            behavior: "smooth",
-                            block: "nearest",
-                          });
-                      }}
-                    >
-                      <span className="sr-only">{p.name}</span>
-                      <span
-                        aria-hidden
-                        className="text-lg leading-none font-bold"
-                      >
-                        ·
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </GoogleMapsMapPanel>
+            <GoogleMapsMapPanel
+              places={filtered}
+              placesKey={placesKey}
+              onPlaceSelect={handlePlaceSelect}
+            />
 
             <p className="shrink-0 font-sans text-xs text-[#5a7399]">
               {filtered.length} location{filtered.length === 1 ? "" : "s"} match

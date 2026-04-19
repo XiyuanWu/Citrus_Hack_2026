@@ -3,7 +3,9 @@ import { communityPageBySlug } from "../../../data/communityPages";
 
 function BlackOrAfricanAmericanPage() {
   return (
-    <CommunityPageLayout {...communityPageBySlug["black-or-african-american"]} />
+    <CommunityPageLayout
+      {...communityPageBySlug["black-or-african-american"]}
+    />
   );
 }
 
