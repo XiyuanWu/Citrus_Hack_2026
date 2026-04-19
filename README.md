@@ -4,7 +4,6 @@
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23407ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 
 **Authors**
 
@@ -29,4 +28,18 @@ The project takes cues from Sacramento State’s Belonging Maps idea: one platfo
 
 ## Getting started
 
+From the repository root:
+
+```bash
+npm install
+npm run dev
+```
+
+For production:
+
+```bash
+npm run build
+```
+
+Set `VITE_GOOGLE_MAPS_API_KEY` in a `.env` file at the project root (this file is gitignored).
 

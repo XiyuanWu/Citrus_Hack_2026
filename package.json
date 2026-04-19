@@ -1,5 +1,6 @@
 {
-  "name": "frontend",
+  "name": "ucr-belonging-map",
+  "homepage": "https://XiyuanWu.github.io/Resource_Map_UCR",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,10 +10,13 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.0.2",
+    "gh-pages": "^6.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.14.1"

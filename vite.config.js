@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // Ensure .env next to this file (frontend/) is always loaded (default),
-  // especially when the dev server is started from the frontend directory.
+  // Load `.env` from the project root (same directory as this config).
   envDir: ".",
+  base: "/Resource_Map_UCR/",
 });
