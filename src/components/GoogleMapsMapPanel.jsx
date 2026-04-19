@@ -175,13 +175,14 @@ function GoogleMapsMapPanel({ places, placesKey, onPlaceSelect }) {
             <code className="rounded-md border border-[#c8d6ec] bg-white/90 px-1.5 py-0.5 font-mono text-[13px]">
               .env
             </code>{" "}
-            file in{" "}
+            file at the project root (next to{" "}
             <code className="rounded-md border border-[#c8d6ec] bg-white/90 px-1.5 py-0.5 font-mono text-[13px]">
-              frontend/
-            </code>{" "}
-            and restart{" "}
-            <code className="font-mono text-[13px]">npm run dev</code> from this
-            folder so Vite picks up the key.
+              package.json
+            </code>
+            ), then restart{" "}
+            <code className="font-mono text-[13px]">npm run dev</code> from that
+            folder so Vite picks up the key. For GitHub Pages builds, add the
+            same variable as a repository Actions secret.
           </p>
         </div>
       </div>
