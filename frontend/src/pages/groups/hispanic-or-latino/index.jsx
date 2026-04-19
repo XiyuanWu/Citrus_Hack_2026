@@ -1,5 +1,5 @@
 import LandingHeader from "../../../components/LandingHeader";
-import placeholderImage from "../../../assets/landing/ucr background.jpg";
+import placeholderImage from "../../../assets/landing/Background_Latino_Page.jpg";
 
 function HispanicOrLatinoPage() {
   return (
@@ -7,43 +7,50 @@ function HispanicOrLatinoPage() {
       <LandingHeader />
 
       <section className="mx-auto w-full max-w-6xl px-6 py-14 md:px-10">
-        <div className="overflow-hidden rounded-4xl bg-linear-to-r from-[#fffaf0] via-[#fffdf8] to-[#f5f8ff] md:grid md:grid-cols-[1.05fr_0.95fr]">
-          <div className="flex flex-col justify-center px-7 py-10 md:px-12 md:py-14">
-            <p className="font-display text-sm font-extrabold tracking-[0.18em] text-[#2a4b84]">
-              COMMUNITY PAGE
-            </p>
-            <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-[#0f2f69]">
-              Hispanic or Latino
+        <div className="relative overflow-hidden rounded-4xl bg-gray-900 min-h-[500px] flex items-center shadow-2xl">
+          
+          <img
+            src={placeholderImage}
+            alt="UCR Campus"
+            className="absolute inset-0 h-full w-full object-cover z-0"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10"></div>
+
+          <div className="relative z-20 flex flex-col justify-center px-8 py-12 md:px-16 md:py-20">
+            <h1 className="font-display text-6xl md:text-7xl font-bold tracking-tight text-white">
+              SOMOS UCR
             </h1>
-            <p className="mt-4 max-w-xl font-sans text-lg leading-relaxed text-[#314a74]">
-              This page will curate resources, spaces, and organizations that
-              support students with Spanish-speaking or Latin American heritage.
+            
+            <p className="mt-2 font-display text-lg md:text-xl font-extrabold tracking-[0.18em] text-[#ECC24D] uppercase">
+              Latino Community Belonging Map
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 space-y-4">
+              <p className="font-display text-[15px] font-bold tracking-[0.1em] text-[#ECC24D]">
+                Celebrating Culture. Building Community. Supporting Success.
+              </p>
+              
+              <p className="max-w-xl font-sans text-sm md:text-base leading-relaxed text-gray-200">
+                This map highlights spaces, programs, businesses, and organizations that support
+                and celebrate Latinx students, faculty, staff, and the greater Riverside community.
+              </p>
+            </div>
+
+            <div className="mt-10 flex flex-wrap gap-4">
               <a
                 href="/"
-                className="inline-flex items-center justify-center rounded-full bg-[#0f2f69] px-5 py-2.5 font-display text-base font-bold text-white transition hover:bg-[#0b2453]"
+                className="inline-flex items-center justify-center rounded-full bg-[#0f2f69] px-7 py-3 font-display text-base font-bold text-white transition-all hover:bg-[#1a4185] hover:scale-105"
               >
                 Back to Home
               </a>
               <a
                 href="#resources"
-                className="inline-flex items-center justify-center rounded-full border border-[#b8c6df] bg-white px-5 py-2.5 font-display text-base font-bold text-[#0f2f69] transition hover:bg-[#f5f8ff]"
+                className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-7 py-3 font-display text-base font-bold text-white transition-all hover:bg-white/20 hover:scale-105"
               >
                 Jump to Resources
               </a>
             </div>
-          </div>
-
-          <div className="relative min-h-64 overflow-hidden">
-            <img
-              src={placeholderImage}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-right opacity-85"
-            />
-            <div className="absolute inset-0 bg-linear-to-r from-[#fffdf8] via-[#fffdf8]/35 to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-t from-[#fffdf8]/65 via-transparent to-transparent" />
           </div>
         </div>
       </section>
@@ -52,14 +59,17 @@ function HispanicOrLatinoPage() {
         id="resources"
         className="mx-auto w-full max-w-6xl px-6 pb-20 md:px-10"
       >
-        <div className="rounded-3xl border border-[#d3def0] bg-white p-6 md:p-8">
-          <h2 className="font-display text-2xl font-bold text-[#0f2f69]">
-            Resources (WIP)
+        <div className="rounded-3xl border border-[#d3def0] bg-white p-8 shadow-sm">
+          <h2 className="font-display text-3xl font-bold text-[#0f2f69]">
+            Resources
           </h2>
-          <p className="mt-2 font-sans text-base leading-relaxed text-[#314a74]">
-            Add links to campus offices, cultural centers, student orgs,
-            financial aid resources, and community services here.
+          <p className="mt-4 font-sans text-lg leading-relaxed text-[#314a74]">
+            Explore the local organizations, student hubs, and cultural centers 
+            that foster a deep sense of connection and belonging within the UCR community.
           </p>
+          
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          </div>
         </div>
       </section>
     </main>
