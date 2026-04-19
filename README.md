@@ -43,3 +43,22 @@ npm run build
 
 Set `VITE_GOOGLE_MAPS_API_KEY` in a `.env` file at the project root (this file is gitignored).
 
+## Deploy to GitHub Pages
+
+### Option A — GitHub Actions (matches “Deploy from GitHub Actions” / workflow on `main`)
+
+1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions** (not “Deploy from a branch” unless you only publish `dist` on `main`).
+2. Push `main`; the workflow in `.github/workflows/pages.yml` runs `npm ci`, `npm run build`, and uploads `dist/`.
+3. **`vite.config.js` `base`:** use `"/"` for a site at `https://<user>.github.io` (typical `username.github.io` repo). Use `"/YourRepoName/"` only for project pages at `https://<user>.github.io/YourRepoName/`.
+4. Optional: add repository secret **`VITE_GOOGLE_MAPS_API_KEY`** so the map works in production builds.
+
+### Option B — `gh-pages` branch (`npm run deploy`)
+
+From the repo root:
+
+```bash
+npm run deploy
+```
+
+Then in **Settings → Pages**, set Source to the **`gh-pages`** branch and `/ (root)`. Ensure `base` in `vite.config.js` matches the real URL path (see step 3 above).
+

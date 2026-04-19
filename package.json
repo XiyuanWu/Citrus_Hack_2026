@@ -1,18 +1,18 @@
 {
   "name": "ucr-belonging-map",
-  "homepage": "https://XiyuanWu.github.io/Resource_Map_UCR",
+  "homepage": "https://xiyuanwu.github.io",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/copy-spa-404.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist --nojekyll"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.0.2",
