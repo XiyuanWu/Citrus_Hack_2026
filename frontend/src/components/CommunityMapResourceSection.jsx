@@ -10,6 +10,7 @@ function CommunityMapResourceSection({
   resourceIntro,
 }) {
   const [category, setCategory] = useState(null);
+  const [selectedPlaceId, setSelectedPlaceId] = useState(null);
 
   const categories = useMemo(() => {
     const set = new Set(places.map((p) => p.category));
@@ -22,6 +23,11 @@ function CommunityMapResourceSection({
       return true;
     });
   }, [places, category]);
+
+  const handleCategoryChange = useCallback((next) => {
+    setCategory(next);
+    setSelectedPlaceId(null);
+  }, []);
 
   const placesKey = useMemo(
     () =>
@@ -38,9 +44,11 @@ function CommunityMapResourceSection({
   );
 
   const handlePlaceSelect = useCallback((placeId) => {
-    document.getElementById(`place-card-${placeId}`)?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
+    setSelectedPlaceId(placeId);
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`place-card-${placeId}`);
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      el?.focus?.();
     });
   }, []);
 
@@ -79,7 +87,7 @@ function CommunityMapResourceSection({
               <div className="mt-2 flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => setCategory(null)}
+                  onClick={() => handleCategoryChange(null)}
                   className={`rounded-full border px-3.5 py-1.5 font-sans text-xs font-semibold transition md:text-sm ${
                     category === null
                       ? "border-[#0f2f69] bg-[#0f2f69] text-white"
@@ -92,7 +100,7 @@ function CommunityMapResourceSection({
                   <button
                     key={cat}
                     type="button"
-                    onClick={() => setCategory(cat)}
+                    onClick={() => handleCategoryChange(cat)}
                     className={`rounded-full border px-3.5 py-1.5 font-sans text-xs font-semibold transition md:text-sm ${
                       category === cat
                         ? "border-[#0f2f69] bg-[#0f2f69] text-white"
@@ -108,6 +116,7 @@ function CommunityMapResourceSection({
             <GoogleMapsMapPanel
               places={filtered}
               placesKey={placesKey}
+              selectedPlaceId={selectedPlaceId}
               onPlaceSelect={handlePlaceSelect}
             />
 
@@ -131,8 +140,17 @@ function CommunityMapResourceSection({
             </div>
             <ul className="min-h-0 flex-1 list-none space-y-3 overflow-y-auto overscroll-contain p-3">
               {filtered.map((p) => (
-                <li key={p.id} id={`place-card-${p.id}`}>
-                  <ResourcePlaceCard place={p} />
+                <li
+                  key={p.id}
+                  id={`place-card-${p.id}`}
+                  tabIndex={-1}
+                  className="rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#0f2f69] focus-visible:ring-offset-2"
+                >
+                  <ResourcePlaceCard
+                    place={p}
+                    isSelected={selectedPlaceId === p.id}
+                    onActivate={() => setSelectedPlaceId(p.id)}
+                  />
                 </li>
               ))}
             </ul>

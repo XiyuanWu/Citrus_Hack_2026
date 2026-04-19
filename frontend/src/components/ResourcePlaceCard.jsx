@@ -23,7 +23,7 @@ function googleMapsLinkForPlace(p) {
   return null;
 }
 
-function ResourcePlaceCard({ place: p }) {
+function ResourcePlaceCard({ place: p, isSelected = false, onActivate }) {
   const cardImages = useMemo(
     () => getPlaceCardImageUrls(p),
     [p.id, p.category, p.lat, p.lng, p.mapX, p.mapY, p.images],
@@ -49,7 +49,17 @@ function ResourcePlaceCard({ place: p }) {
   }, []);
 
   return (
-    <article className="overflow-hidden rounded-xl border border-[#e2eaf5] bg-white transition hover:border-[#0f2f69]/25 hover:shadow-sm">
+    <article
+      onClick={(e) => {
+        if (e.target.closest("a")) return;
+        onActivate?.();
+      }}
+      className={`cursor-pointer overflow-hidden rounded-xl border bg-white text-left transition hover:border-[#0f2f69]/25 hover:shadow-sm ${
+        isSelected
+          ? "border-[#f2b617] ring-2 ring-[#f2b617]/50 shadow-md"
+          : "border-[#e2eaf5]"
+      }`}
+    >
       {cardImages.length > 0 && (
         <div className="grid grid-cols-2 gap-px bg-[#e2eaf5]">
           {cardImages.map((src, idx) => (

@@ -1,5 +1,9 @@
 import { asianMapPlaces } from "./communityPlaces/asianMapPlaces";
 import { hispanicOrLatinoMapPlaces } from "./communityPlaces/latinoMapPlaces";
+import {
+  getDirectionsUrl,
+  ummahPlaces,
+} from "./communityPlaces/ummahPlaces";
 
 export type PlaceCategory =
   | "community_clubs"
@@ -42,6 +46,29 @@ const CATEGORIES: PlaceCategory[] = [
   "career_support",
 ];
 
+/** Ummah spreadsheet rows → same shape as Latino / Asian map cards. */
+function ummahRowToMapPlace(
+  p: (typeof ummahPlaces)[number],
+): MapPlace {
+  return {
+    id: p.id,
+    name: p.name,
+    category: p.categoryId,
+    blurb: p.description,
+    mapX: 50,
+    mapY: 50,
+    lat: p.lat,
+    lng: p.lng,
+    address: p.address,
+    contact: p.website ?? "",
+    resource: p.website ?? "",
+    images: p.photos?.length ? p.photos : false,
+    googleMapsUrl: p.googleMapLink?.trim() || getDirectionsUrl(p),
+  };
+}
+
+const ummahMuslimMapPlaces: MapPlace[] = ummahPlaces.map(ummahRowToMapPlace);
+
 function fakePlaces(seed: string): MapPlace[] {
   const base = seed.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
   const names = [
@@ -73,7 +100,7 @@ function fakePlaces(seed: string): MapPlace[] {
 
 export const communityMapPlacesBySlug: Record<string, MapPlace[]> = {
   "hispanic-or-latino": hispanicOrLatinoMapPlaces,
-  "ummah-muslim": fakePlaces("ummah-muslim"),
+  "ummah-muslim": ummahMuslimMapPlaces,
   asian: asianMapPlaces,
   "black-or-african-american": fakePlaces("black-or-african"),
   "american-indian": fakePlaces("american-indian"),

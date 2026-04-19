@@ -27,7 +27,12 @@ function safeClearMap(map) {
   }
 }
 
-function GoogleMapsMapPanel({ places, placesKey, onPlaceSelect }) {
+function GoogleMapsMapPanel({
+  places,
+  placesKey,
+  selectedPlaceId = null,
+  onPlaceSelect,
+}) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const markersRef = useRef([]);
@@ -63,10 +68,12 @@ function GoogleMapsMapPanel({ places, placesKey, onPlaceSelect }) {
       list.forEach((p) => {
         const pos = getPlaceLatLng(p);
         bounds.extend(pos);
+        const isSelected = p.id === selectedPlaceId;
         const marker = new google.maps.Marker({
           position: pos,
           map,
-          title: p.name,
+          title: `${p.name}${isSelected ? " (selected)" : ""}`,
+          zIndex: isSelected ? 1000 : 1,
         });
         marker.addListener("click", () => {
           onPlaceSelectRef.current?.(p.id);
@@ -84,7 +91,7 @@ function GoogleMapsMapPanel({ places, placesKey, onPlaceSelect }) {
       console.error("Google Maps markers / bounds:", e);
       setLoadError((e && e.message) || String(e));
     }
-  }, [clearMarkers]);
+  }, [clearMarkers, selectedPlaceId]);
 
   /** Create map once per mount when API key exists (never re-`new Map` on same div). */
   useEffect(() => {
@@ -157,7 +164,7 @@ function GoogleMapsMapPanel({ places, placesKey, onPlaceSelect }) {
     setLoadError(null);
     applyMarkers();
     return undefined;
-  }, [placesKey, applyMarkers]);
+  }, [placesKey, selectedPlaceId, applyMarkers]);
 
   if (!hasKey) {
     return (

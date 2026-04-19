@@ -52,6 +52,10 @@ export const communityPageBySlug: Record<string, CommunityPageData> = {
     description:
       "Prayer spaces, student groups, dining options, and support that reflect Muslim life and community on campus and in Riverside.",
     ...defaultPlaceholders,
+    mapPlaceholder:
+      "Explore campus and nearby spots that support Muslim students and the ummah. Use the category filters to focus the map and list.",
+    resourcePlaceholder:
+      "Each card matches the map filters. Open a pin or card for directions in Google Maps.",
     heroImage:
       "https://plus.unsplash.com/premium_photo-1663013656159-a853ffa09693?auto=format&fit=crop&w=1600&h=800&q=80",
     heroHeading: "Ummah-Muslim",
