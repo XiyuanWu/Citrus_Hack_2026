@@ -6,12 +6,34 @@ function fallbackImageSrc(placeId, slotIndex) {
   return `https://picsum.photos/seed/belonging-${encodeURIComponent(placeId)}-${slotIndex}/400/240`;
 }
 
+/** Prefer explicit URL; else lat/lng; else address or name for Google Maps search. */
+function googleMapsLinkForPlace(p) {
+  if (p.googleMapsUrl?.trim()) return p.googleMapsUrl.trim();
+  if (typeof p.lat === "number" && typeof p.lng === "number") {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${p.lat},${p.lng}`)}`;
+  }
+  const addr = p.address?.trim();
+  if (addr) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`;
+  }
+  const name = p.name?.trim();
+  if (name) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
+  }
+  return null;
+}
+
 function ResourcePlaceCard({ place: p }) {
   const cardImages = useMemo(
     () => getPlaceCardImageUrls(p),
     [p.id, p.category, p.lat, p.lng, p.mapX, p.mapY, p.images],
   );
   const [useFallback, setUseFallback] = useState(() => ({}));
+
+  const mapsHref = useMemo(
+    () => googleMapsLinkForPlace(p),
+    [p.id, p.googleMapsUrl, p.lat, p.lng, p.address, p.name],
+  );
 
   const handleImgError = useCallback((slotIndex, event) => {
     if (event?.currentTarget?.dataset?.fallbackApplied === "1") {
@@ -64,9 +86,9 @@ function ResourcePlaceCard({ place: p }) {
         <p className="mt-2 font-sans text-xs leading-relaxed text-[#314a74] md:text-sm">
           {p.blurb}
         </p>
-        {p.googleMapsUrl && (
+        {mapsHref && (
           <a
-            href={p.googleMapsUrl}
+            href={mapsHref}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 inline-flex items-center justify-center rounded-full bg-[#0f2f69] px-4 py-2 font-display text-xs font-bold text-white transition hover:bg-[#0b2453] md:text-sm"
